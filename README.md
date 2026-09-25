@@ -2,57 +2,57 @@
 
 ## Descripción
 
-StudyAI es una prueba de concepto (POC) que utiliza inteligencia artificial y técnicas de Prompt Engineering para apoyar la planificación del estudio.
+StudyAI es una prueba de concepto (POC) que utiliza inteligencia artificial y técnicas de Prompt Engineering para generar planes de estudio personalizados.
 
-El proyecto busca ayudar a estudiantes a organizar sus materias, temas y tiempo disponible mediante un plan de estudio generado por un modelo de inteligencia artificial. Además, incorpora un modelo texto → imagen para complementar la planificación textual con una representación visual.
+El proyecto busca ayudar a estudiantes a organizar sus materias, temas y tiempo disponible mediante un plan de estudio generado por un modelo de inteligencia artificial.
+
+Además, el proyecto incorpora un componente de generación de imágenes mediante texto → imagen para representar visualmente el plan de estudio.
 
 ## Problema
 
 Los estudiantes pueden tener dificultades para organizar diferentes materias y contenidos dentro del tiempo disponible antes de una evaluación.
 
-StudyAI propone utilizar inteligencia artificial para transformar estos datos en una planificación de estudio organizada y complementarla con un recurso visual que facilite su comprensión.
+StudyAI propone utilizar inteligencia artificial para transformar estos datos en una planificación de estudio organizada y complementarla con una representación visual que facilite su comprensión.
 
 ## Objetivo
 
-Desarrollar una POC que permita experimentar con diferentes técnicas de prompting y evaluar cómo estas afectan la calidad y el control de las respuestas generadas por modelos de inteligencia artificial.
+Desarrollar una POC que permita experimentar con diferentes técnicas de Prompt Engineering y evaluar cómo estas afectan la calidad y el control de las respuestas generadas por modelos de IA.
 
-La propuesta utiliza dos modalidades:
+El proyecto utiliza dos modalidades:
 
 - Texto → texto: generación de planes de estudio.
-- Texto → imagen: generación de una representación visual del plan.
+- Texto → imagen: generación de una representación visual del plan de estudio.
 
 ## Técnicas de Prompting
 
-Durante el desarrollo se experimentaron:
+Durante el desarrollo se experimentaron diferentes técnicas:
 
 - Prompting directo.
 - Prompt estructurado.
 - Few-shot prompting.
-- Uso de restricciones explícitas.
+- Uso de restricciones.
 - Prompts dinámicos.
 - Estructuración de prompts para generación de imágenes.
 
-Estas técnicas permitieron mejorar progresivamente el control y la precisión de las respuestas y resultados generados por los modelos.
+Estas técnicas permitieron mejorar progresivamente la precisión, el control y la especificidad de las respuestas generadas.
 
 ## Funcionamiento
 
-El usuario proporciona:
+### Texto → texto
 
-- Materias y temas.
-- Tiempo disponible por día.
-- Cantidad de días disponibles.
-
-Estos datos se incorporan dinámicamente a un prompt estructurado, que luego es enviado al modelo de inteligencia artificial.
-
-El flujo principal del modelo texto → texto es:
-
+```text
 Usuario → Datos → Prompt → Modelo de IA → Plan de estudio
+```
 
-Para el modelo texto → imagen se utiliza el concepto del plan generado como referencia para construir un prompt visual:
+El usuario proporciona información como materias, temas, fecha del examen y tiempo disponible. Estos datos son incorporados al prompt y enviados al modelo de IA para generar una planificación personalizada.
 
-Plan de estudio → Prompt visual → Herramienta de generación de imágenes → Representación visual
+### Texto → imagen
 
-La generación de imágenes se realizó mediante una herramienta externa gratuita, sin utilizar una API de imágenes.
+```text
+Plan de estudio → Prompt visual → NightCafe → Representación visual
+```
+
+El plan de estudio sirve como referencia para construir un prompt orientado a generar una representación visual organizada por días, materias, temas y sesiones de estudio.
 
 ## Tecnologías y herramientas
 
@@ -64,64 +64,68 @@ La generación de imágenes se realizó mediante una herramienta externa gratuit
 - NightCafe
 - GitHub
 
+### Generación de imágenes
+
+Para el componente texto → imagen se utilizó NightCafe como herramienta gratuita de generación visual.
+
+Se seleccionó una composición horizontal debido a que el resultado representa un plan de estudio organizado por días y materias, permitiendo distribuir visualmente la información de manera clara.
+
+Las imágenes generadas fueron incorporadas al repositorio como evidencia de la experimentación.
+
 ## Optimización
 
-La implementación final del modelo texto → texto utiliza una única consulta a la API para generar cada plan de estudio, evitando consultas innecesarias y reduciendo el consumo de recursos.
+La implementación del modelo texto → texto utiliza una única consulta a la API para generar cada plan de estudio, evitando consultas innecesarias y reduciendo el consumo de recursos.
 
-En el modelo texto → imagen se experimentó con un prompt inicial y posteriormente con un prompt estructurado que incorpora:
+Para el modelo texto → imagen se experimentó inicialmente con un prompt general y posteriormente con un prompt estructurado que incorpora:
 
 - Rol.
 - Objetivo.
 - Contexto.
 - Datos concretos.
-- Elementos visuales.
+- Elementos requeridos.
 - Restricciones.
-- Estilo.
+- Estilo visual.
 - Formato.
 
-Esto permitió comparar el nivel de control obtenido mediante diferentes niveles de especificidad en las instrucciones.
+La comparación permitió observar cómo una mayor especificidad en las instrucciones proporciona mayor control sobre las características esperadas de la imagen.
 
-## Estructura
+## Estructura del proyecto
 
 ```text
 StudyAI-Fast-Prompting/
-│
 ├── images/
-│   ├── prompt_inicial.png
-│   └── prompt_optimizado.png
-│
+│   ├── prompt_inicial.webp
+│   └── prompt_optimizado.webp
 ├── StudyAI_Fast_Prompting.ipynb
 ├── README.md
 └── .gitignore
 ```
 
-El archivo `.env` se utiliza localmente para almacenar las credenciales de la API y está excluido del repositorio mediante `.gitignore`.
-
-El directorio `.venv` también está excluido porque contiene el entorno virtual local de Python y no es necesario subirlo a GitHub.
+Los archivos `.env` y `.venv` se mantienen fuera del repositorio mediante `.gitignore`.
 
 ## Instalación y ejecución
 
-### 1. Instalar Python
+### 1. Clonar el repositorio
 
-El proyecto requiere Python instalado en el equipo.
+```bash
+git clone https://github.com/Mr-Isac/StudyAI-Fast-Prompting.git
+```
 
 ### 2. Crear y activar el entorno virtual
 
-Desde la carpeta del proyecto:
-
-```text
+```bash
 python -m venv .venv
 ```
 
-Activar el entorno en Windows:
+En Windows:
 
-```text
+```bash
 .venv\Scripts\activate
 ```
 
 ### 3. Instalar las dependencias
 
-```text
+```bash
 pip install groq python-dotenv jupyter
 ```
 
@@ -130,76 +134,71 @@ pip install groq python-dotenv jupyter
 Crear un archivo `.env` en la raíz del proyecto:
 
 ```text
-GROQ_API_KEY=TU_API_KEY
+GROQ_API_KEY=tu_api_key
 ```
 
-Reemplazar `TU_API_KEY` por una API Key válida de Groq.
+La API Key no debe incluirse directamente en el código ni subirse al repositorio.
 
-La API Key no debe compartirse ni subirse a GitHub.
+### 5. Ejecutar Jupyter Notebook
 
-### 5. Abrir Jupyter Notebook
-
-Ejecutar:
-
-```text
+```bash
 python -m jupyter notebook
 ```
 
-Luego abrir:
+Abrir el archivo:
 
 ```text
 StudyAI_Fast_Prompting.ipynb
 ```
 
-### 6. Ejecutar la POC
-
-Ejecutar las celdas de la notebook en orden.
-
-La POC solicitará al usuario:
-
-- Materias y temas.
-- Tiempo disponible por día.
-- Cantidad de días para estudiar.
-
-Luego enviará los datos al modelo y mostrará el plan de estudio generado.
-
-La sección texto → imagen contiene los prompts utilizados para generar las representaciones visuales y las imágenes obtenidas durante la experimentación.
+y ejecutar las celdas en orden.
 
 ## Resultados
 
-La experimentación permitió observar que la incorporación de contexto, restricciones, ejemplos y una estructura clara mejora el control sobre las respuestas del modelo texto → texto.
+La experimentación permitió comprobar que las técnicas de Fast Prompting mejoran el control sobre las respuestas generadas por el modelo de texto → texto.
 
-También se comprobó que el prompt puede reutilizarse con diferentes conjuntos de materias y temas.
+La utilización de prompts estructurados y restricciones permitió obtener planes de estudio más organizados y adaptados a los datos proporcionados por el estudiante.
 
-En el modelo texto → imagen, la comparación entre un prompt inicial y un prompt estructurado permitió observar que agregar contexto, datos específicos, restricciones, estilo y formato proporciona mayor control sobre las características esperadas de la imagen.
+En el modelo texto → imagen, el prompt inicial permitió obtener una representación general de un plan de estudio, mientras que el prompt optimizado incorporó información específica, restricciones y características visuales para orientar mejor la generación.
+
+La comparación de ambos resultados permitió observar que las técnicas de estructuración y especificidad también pueden aplicarse a modelos texto → imagen.
 
 ## Alcance
 
-Esta entrega corresponde a una prueba de concepto desarrollada en Jupyter Notebook.
+El proyecto corresponde a una prueba de concepto desarrollada en Jupyter Notebook.
 
-La solución combina dos modalidades de inteligencia artificial:
+Como trabajo futuro, StudyAI podría evolucionar hacia una aplicación web completa que incorpore:
 
-- Texto → texto para generar planes de estudio.
-- Texto → imagen para generar recursos visuales relacionados con dichos planes.
-
-No se incluye una aplicación web completa. Una futura versión podría incorporar una interfaz web, generación automática de recursos visuales a partir del plan generado, seguimiento del progreso y mayor personalización de los planes de estudio.
+- Generación automática de recursos visuales.
+- Seguimiento del progreso del estudiante.
+- Personalización avanzada de los planes de estudio.
+- Integración de diferentes modelos de inteligencia artificial.
 
 ## Referencias
 
-- Groq — Documentación oficial de la API.
-- NightCafe — Plataforma de generación de imágenes mediante inteligencia artificial.
-- OpenAI — Guías de Prompt Engineering.
-- Python — Documentación oficial.
-- Jupyter — Documentación oficial de Jupyter Notebook.
+- Groq. (2026). Groq API Documentation.
+  https://console.groq.com/docs
+
+- NightCafe. (2026). AI Art Generator.
+  https://creator.nightcafe.studio/
+
+- OpenAI. (2026). Prompt engineering guide.
+  https://platform.openai.com/docs/guides/prompt-engineering
+
+- Python Software Foundation. (2026). Python Documentation.
+  https://docs.python.org/3/
+
+- Project Jupyter. (2026). Jupyter Notebook Documentation.
+  https://docs.jupyter.org/en/latest/
 
 ## Autor
 
-Isaac Mendoza Rubio
+**Isaac Mendoza Rubio**
 
-## Curso
+### Curso
 
-Inteligencia artificial: Generación de Prompts
+Inteligencia Artificial: Generación de Prompts
 
-## Comisión
+### Comisión
 
 95920
